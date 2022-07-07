@@ -1,0 +1,244 @@
+<div
+  class="header__wrapper"
+  x-data="header"
+>
+  <!-- ANCHOR: Header Start -->
+  <div class="header__start__wrapper">
+    <!-- ANCHOR: Menu Button -->
+    <button
+      class="header__start__button"
+      x-data="{ open: false }"
+      @click="open = ! open;"
+    >
+      <!-- TODO: Add customizable shop logo -->
+      {% render 'icon',
+        type: 'menu',
+        width: '25',
+        height: '25'
+      %}
+
+      <span style="padding-top: 2px;">Menu</span>
+
+      {% render 'header-menu' %}
+    </button>
+    
+    <!-- ANCHOR: Divider -->
+    <hr class="divider__vertical header__hide__mobile" />
+    
+    <!-- ANCHOR: Navigation -->
+    <nav class="header__start__nav__wrapper header__hide__mobile">
+      {% for link in linklists.main-menu.links %}
+        {% if link.links == blank %}
+          <a
+            href="{{ link.url }}"
+            style="height: 100%; color: transparent;"
+          >
+            <button
+              class="header__start__button"
+              {% if link.active %}
+                style="cursor: not-allowed"
+                disabled
+              {% endif %}
+            >
+              {{ link.title }}
+            </button>
+          </a>
+        {% else %}
+          <span
+            style="height: 100%; position: relative;"
+            x-data="{ open: false }"
+          >
+            <button
+              class="header__start__button"
+              @click="open = ! open;"
+            >
+              {{ link.title }}
+            </button>
+
+            <ul
+              class="header__menu__popper"
+              x-show="open"
+              @click.outside="open = false"
+              x-cloak
+            >
+              {% for child_link in link.links %}
+                <li>
+                  <a
+                    href="{{ child_link.url }}"
+                    style="height: 100%; color: transparent;"
+                  >
+                    <button
+                      class="header__start__button"
+                      {% if child_link.active %}
+                        style="cursor: not-allowed"
+                        disabled
+                      {% endif %}
+                    >
+                      {{ child_link.title }}
+                    </button>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </span>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+
+  <!-- ANCHOR: Header End -->
+  <div class="header__end__wrapper">
+    <a
+      class="header__end__cart__button"
+      href="{{ routes.cart_url }}"
+    >
+      {% render 'icon',
+        type: 'shopping-cart',
+        width: '15',
+        height: '15'
+      %}
+
+      <span x-text="$store.cart.data.item_count"></span>
+    </a>
+    
+    <hr class="divider__vertical" style="margin: 0 0.15rem;" />
+
+    <span x-text="currentTime"></span>
+  </div>
+</div>
+
+<style>
+  .header__wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    background-color: var(--color-base-100);
+    padding: 0.25rem;
+    border-style: outset;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header__start__wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+  }
+
+  .header__start__nav__wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+  }
+
+  .header__menu__popper {
+    position: absolute;
+    bottom: 33px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 10rem;
+    background-color: var(--color-base-100);
+    padding: 0.5rem;
+    border-style: outset;
+    border-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+    z-index: 40;
+  }
+
+  .header__menu__popper > li > a > button {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    display: block;
+    width: 100%;
+  }
+
+  .header__start__button {
+    min-width: auto;
+    height: 100%;
+    font-size: 1.25rem;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .header__end__wrapper {
+    border-style: inset;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    font-size: 0.8rem;
+    line-height: normal;
+  }
+
+  .header__end__cart__button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    padding: 0;
+    min-width: auto;
+    min-height: auto;
+    box-shadow: none;
+    color: initial;
+    text-decoration: none;
+  }
+
+  .header__end__cart__button:focus {
+    outline: none;
+  }
+
+  @media all and (max-width: 60em) {
+    .header__hide__mobile {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("header", () => ({
+    currentTime: "",
+    init() {
+      this.updateTime()
+    },
+    updateTime() {
+      const getTime = () => {
+        const date = new Date()
+        const hr = date.getHours()
+        const min = date.getMinutes()
+        
+        return `${hr < 10 ? "0" + hr : hr}:${min < 10 ? "0" + min : min}`
+      }
+      this.currentTime = getTime()
+      setInterval(() => this.currentTime = getTime(), 60000)
+    }
+  }))
+})
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header"
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+:root {
+  /* ANCHOR: Root Style Variables */
+
+  /* ANCHOR: Color */
+  --color-base-100: #C0C0C0;
+  --color-base-200: #DFDFDF;
+  --color-base-300: #FFFFFF;
+  --color-base-content: #222222;
+  --color-red: #DF6060;
+  --color-yellow: #DFDF60;
+  --color-green: #60A060;
+  --color-blue: #6060DF;
+  --color-turquoise: #008080;
+}
+
+/* ANCHOR: Breakpoints */
+:root { --breakpoint: 'unset';}
+@media screen and (min-width: 567px) {
+  :root { --breakpoint: 'sm'; }
+}
+@media screen and (min-width: 900px) {
+  :root { --breakpoint: 'md'; }
+}
+@media screen and (min-width: 1200px) {
+  :root { --breakpoint: 'lg'; }
+}
+@media screen and (min-width: 1600px) {
+  :root { --breakpoint: '2xl'; }
+}
+
+/* ANCHOR: Everything */
+* {
+  box-sizing: border-box;
+}
+
+/* ANCHOR: Body */
+html, body {
+  background-color: var(--color-turquoise);
+  color: var(--color-base-content);
+  width: 100%;
+  min-height: 100vh;
+  font-family: "Pixelated MS Sans Serif", Arial;
+}
+
+/* ANCHOR: Heading */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+/* ANCHOR: Container */
+.container {
+  margin: 0 auto;
+  max-width: 80rem;
+  padding: 0 0.25rem;
+}
+
+/* ANCHOR: Button, Reset, Submit */
+button, input[type=reset], input[type=submit] {
+  cursor: pointer;
+  line-height: normal;
+}
+
+/* ANCHOR: Divider */
+.divider__horizontal {
+  width: 100%;
+  height: 2px;
+  border-style: outset;
+}
+
+.divider__vertical {
+  width: 2px;
+  height: 100%;
+  border-style: outset;
+}
+
+/* ANCHOR: Lists */
+ul {
+  margin-block-start: auto;
+  margin-block-end: auto;
+  padding-inline-start: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* ANCHOR: Cloak */
+[x-cloak] {
+  display: none !important;
+}

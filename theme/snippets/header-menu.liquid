@@ -1,0 +1,148 @@
+<template x-teleport="body">
+  <aside
+    class="header__menu__wrapper"
+    x-show="open"
+    @click.outside="open = false"
+  >
+    <div class="header__menu__sidebar">
+      <span style="transform: scale(-1);">
+        {{ shop.name }}
+      </span>
+    </div>
+
+    <nav class="header__menu__nav">
+      {% for link in linklists.main-menu.links %}
+        {% if link.links == blank %}
+          <a
+            href="{{ link.url }}"
+            style="width: 100%; color: transparent;"
+          >
+            <button
+              class="header__menu__button"
+              {% if link.active %}
+                style="cursor: not-allowed"
+                disabled
+              {% endif %}
+            >
+              {{ link.title }}
+            </button>
+          </a>
+        {% else %}
+          <span
+            style="width: 100%; position: relative;"
+            x-data="{ open: false }"
+          >
+            <button
+              class="header__menu__button"              
+              @click="open = ! open;"
+            >
+              {{ link.title }}
+            </button>
+
+            <ul
+              class="header__menu__child__links__wrapper"
+              x-show="open"
+              x-cloak
+              @click.outside="open = false"
+            >
+              {% for child_link in link.links %}
+                <li>
+                  <a
+                    href="{{ child_link.url }}"
+                    style="width: 100%; color: transparent;"
+                  >
+                    <button
+                      {% if child_link.active %}
+                        style="cursor: not-allowed"
+                        disabled
+                      {% endif %}
+                    >
+                      > {{ child_link.title }}
+                    </button>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </span>
+        {% endif %}
+      {% endfor %}
+    </nav>
+    
+  </aside>
+
+</template>
+
+<style>
+  .header__menu__wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 20rem;
+    height: 80vh;
+    bottom: 37px;
+    z-index: 40;
+    background-color: var(--color-base-100);
+    border-style: outset;
+    border-bottom: 0;
+    border-left: 0;
+    display: flex;
+  }
+
+  .header__menu__sidebar {
+    height: 100%;
+    padding: 0.5rem 0.15rem;
+    padding-left: 0.3rem;
+    background-color: var(--color-blue);
+    border-style: inset;
+    border-top: 0;
+    border-left: 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-transform: uppercase;
+    font-size: 2rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    user-select: none;
+  }
+
+  .header__menu__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 0.5rem;
+  }
+
+  .header__menu__button {
+    width: 100%;
+    text-align: left;
+    font-size: 2rem;
+    padding: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header__menu__child__links__wrapper {
+    margin-top: 0.35rem;
+    padding-left: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* border-style: outset; */
+    background-color: var(--color-base-100);
+  }
+
+  .header__menu__child__links__wrapper > li > a > button {
+    width: 100%;
+    text-align: left;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.25rem;
+  }
+</style>
