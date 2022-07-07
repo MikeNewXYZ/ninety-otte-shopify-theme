@@ -45,6 +45,24 @@ html, body {
   font-family: "Pixelated MS Sans Serif", Arial;
 }
 
+body::after {
+  content: "";
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(220,220,220, 0.05),
+    rgba(220,220,220, 0.05) 2px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
 /* ANCHOR: Heading */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
