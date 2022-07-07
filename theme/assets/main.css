@@ -38,7 +38,10 @@ html, body {
   background-color: var(--color-turquoise);
   color: var(--color-base-content);
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   font-family: "Pixelated MS Sans Serif", Arial;
 }
 
@@ -87,4 +90,51 @@ li {
 /* ANCHOR: Cloak */
 [x-cloak] {
   display: none !important;
+}
+
+/* ANCHOR: Main Window */
+.main__window {
+  flex: 1;
+  margin: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main__window .window-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1;
+  margin: 0;
+  padding: 0.25rem;
+}
+
+.main__window .title-bar-controls button {
+  cursor: not-allowed;
+  position: relative;
+}
+
+.main__window .title-bar-controls button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-base-100);
+  opacity: 0.75;
+}
+
+@media all and (max-width: 50em) {
+  .main__window {
+    margin: 0.25rem;
+  }
+}
+
+@media all and (max-width: 35em) {
+  .main__window {
+    margin: 0;
+    box-shadow: none;
+    padding: 0;
+  }
 }
