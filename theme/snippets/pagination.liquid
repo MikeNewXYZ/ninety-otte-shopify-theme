@@ -1,0 +1,45 @@
+<section class="pagination__wrapper">
+  <a
+    class="pagination__part"
+    style="text-decoration: none;"
+    {% if paginate.previous.is_link %}
+      href="{{ paginate.previous.url }}"
+    {% endif %}
+  >
+    <
+  </a>
+
+  {% for part in paginate.parts %}
+    <a
+      class="pagination__part"
+      {% if part.is_link %}
+        href="{{ part.url }}" 
+      {% endif %}
+    >
+      {{ part.title}}
+    </a>
+  {% endfor %}
+
+  <a
+    class="pagination__part"
+    style="text-decoration: none;"
+    {% if paginate.next.is_link %}
+      href="{{ paginate.next.url }}"
+    {% endif %}
+  >
+    >
+  </a>
+</section>
+
+<style>
+  .pagination__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .pagination__part {
+    font-size: 2rem;
+  }
+</style>

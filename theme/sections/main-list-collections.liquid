@@ -1,0 +1,93 @@
+<div class="list__collection__wrapper container">
+  <!-- ANCHOR: Heading -->
+  <h1 class="list__collection__heading">
+    Categories
+  </h1>
+
+  <!-- ANCHOR: Cards -->
+  {% paginate collections by section.settings.pagination %}
+    <section class="list__collections__card__wrapper">
+      {% for collection in collections %}
+        {% render
+          'list-collections-card',
+          collection: collection
+        %}
+      {% endfor %}
+    </section>
+
+    <!-- ANCHOR: Pagination -->
+    {% render 'pagination',
+      paginate: paginate
+    %}
+  {% endpaginate %}
+</div>
+
+
+
+<style>
+  .list__collection__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  @media all and (max-width: 50em) {
+    .list__collection__wrapper {
+      gap: 1rem;
+    }
+  }
+
+  .list__collection__heading {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  @media all and (max-width: 50em) {
+    .list__collection__heading {
+      margin-top: 0.5rem;
+      font-size: 4rem;
+    }
+  }
+  
+  .list__collections__card__wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+
+  @media all and (max-width: 70rem) {
+    .list__collections__card__wrapper {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media all and (max-width: 50rem) {
+    .list__collections__card__wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @media all and (max-width: 35rem) {
+    .list__collections__card__wrapper {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "List Collections",
+  "settings": [
+    {
+    "type": "range",
+    "id": "pagination",
+    "label": "Pagination",
+    "min": 1,
+    "max": 24,
+    "step": 1,
+    "default": 12
+    }
+  ]
+}
+{% endschema %}
