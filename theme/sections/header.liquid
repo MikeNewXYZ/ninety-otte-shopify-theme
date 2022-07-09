@@ -97,7 +97,11 @@
         height: '15'
       %}
 
-      <span x-text="$store.cart.data.item_count"></span>
+      <span
+        x-init="addedToCartTooltip()"
+        x-text="$store.cart.data.item_count"
+      >
+      </span>
     </a>
     
     <hr class="divider__vertical" style="margin: 0 0.15rem;" />
@@ -227,6 +231,14 @@ document.addEventListener("alpine:init", () => {
       }
       this.currentTime = getTime()
       setInterval(() => this.currentTime = getTime(), 60000)
+    },
+    addedToCartTooltip() {
+      this.$watch('$store.cart.data.item_count', (value, oldValue) => {
+        if (!oldValue) return
+        if (value === oldValue) return
+
+        this.$tooltip(`Added: ${this.$store.cart.data.items[0].title}`)
+      })
     }
   }))
 })

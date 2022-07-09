@@ -8,9 +8,11 @@
     {{ content_for_header }}
     {{ 'normalize.css' | asset_url | stylesheet_tag }}
     {{ '98.css' | asset_url | stylesheet_tag }}
+    {{ 'tippy.css' | asset_url | stylesheet_tag }}
     {{ 'main.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'popper.min.js' | asset_url }}"></script>
     <script src="{{ 'cart.js' | asset_url }}" defer></script>
+    <script src="{{ 'alpinejs-tooltip.min.js' | asset_url }}" defer></script>
     <script src="{{ 'alpinejs.min.js' | asset_url }}" defer></script>
   </head>
   <body>

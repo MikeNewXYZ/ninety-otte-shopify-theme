@@ -9,6 +9,17 @@ document.addEventListener("alpine:init", () => {
       const data = await response.json()
 
       this.data = data
+    },
+    async add(items) {
+      await fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ items })
+      })
+    
+      this.getData()
     }
   })
 })

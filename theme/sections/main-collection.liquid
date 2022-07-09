@@ -1,0 +1,75 @@
+<div class="collection__wrapper">
+  <!-- ANCHOR: Heading -->
+  <h1 class="container" style="text-align: center;">
+    {{ collection.title }}
+  </h1>
+
+  <!-- ANCHOR: Cards -->
+  {% paginate collection.products by section.settings.pagination %}
+    <section class="container collection__product__card__wrapper">
+      {% for product in collection.products %}
+        {% render 'product-card',
+          product: product
+        %}
+      {% endfor %}
+    </section>
+
+    <!-- ANCHOR: Pagination -->
+    {% render 'pagination',
+      paginate: paginate
+    %}
+  {% endpaginate %}
+</div>
+
+<style>
+  .collection__wrapper {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .collection__product__card__wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3rem;
+  }
+
+  @media all and (max-width: 70em) {
+    .collection__product__card__wrapper {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media all and (max-width: 55em) {
+    .collection__product__card__wrapper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  @media all and (max-width: 40em) {
+    .collection__product__card__wrapper {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+    "type": "range",
+    "id": "pagination",
+    "label": "Pagination",
+    "min": 1,
+    "max": 24,
+    "step": 1,
+    "default": 12
+    }
+  ]
+}
+{% endschema %}
