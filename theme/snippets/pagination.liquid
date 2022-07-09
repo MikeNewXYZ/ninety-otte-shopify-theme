@@ -1,13 +1,14 @@
 <section class="pagination__wrapper">
-  <a
-    class="pagination__part"
-    style="text-decoration: none;"
-    {% if paginate.previous.is_link %}
+  {% if paginate.previous.is_link %}
+    <a
+      class="pagination__part"
+      style="text-decoration: none;"
       href="{{ paginate.previous.url }}"
-    {% endif %}
-  >
-    <
-  </a>
+    >
+      <
+    </a>    
+  {% endif %}
+
 
   {% for part in paginate.parts %}
     <a
@@ -20,15 +21,15 @@
     </a>
   {% endfor %}
 
-  <a
-    class="pagination__part"
-    style="text-decoration: none;"
-    {% if paginate.next.is_link %}
+  {% if paginate.next.is_link %}
+    <a
+      class="pagination__part"
+      style="text-decoration: none;"
       href="{{ paginate.next.url }}"
-    {% endif %}
-  >
     >
-  </a>
+      >
+    </a>
+  {% endif %}
 </section>
 
 <style>
