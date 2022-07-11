@@ -1,0 +1,162 @@
+<div class="cart__wrapper" x-data="cart">
+  <!-- ANCHOR: Heading -->
+  <h2 class="container cart__heading">
+    Your Cart
+  </h2>
+
+  <!-- ANCHOR: Items Section -->
+  <section class="container" style="width: 100%;">
+    <!-- ANCHOR: Item Headings -->
+    <div class="cart__items__grid cart__item__headings">
+      <h3 style="grid-area: product;">
+        Product
+      </h3>
+      <h3 style="grid-area: quantity; text-align: right;">
+        Quantity
+      </h3>
+      <h3 style="grid-area: total; text-align: right;">
+        Total
+      </h3>
+    </div>
+
+    <!-- ANCHOR: Divider -->
+    <hr
+      class="divider__horizontal"
+      style="margin: 0.5rem 0 1.5rem 0;"
+    />
+
+    <!-- ANCHOR: Cart Items Wrapper -->
+    {% render 'cart-items-wrapper' %}
+  </section>
+
+  <!-- ANCHOR: Divider -->
+  <hr
+    class="container divider__horizontal"
+    style="margin: 0 auto;"
+  />
+
+  <!-- ANCHOR: Checkout Section -->
+  <section
+    class="container cart__checkout__wrapper"
+    x-data="{ cartData: $store.cart.data }"
+    x-effect="cartData = $store.cart.data"
+  >
+    <div>
+      Subtotal:
+      <span
+        x-text="Shopify.formatMoney(cartData.original_total_price, '{{ cart.currency.symbol }}')"
+      ></span>
+    </div>
+    <div>
+      Discount:
+      <span
+        x-text="Shopify.formatMoney(cartData.total_discount, '{{ cart.currency.symbol }}')"
+      ></span>
+    </div>
+    <div>
+      Total:
+      <span
+        x-text="Shopify.formatMoney(cartData.total_price, '{{ cart.currency.symbol }}')"
+      ></span>
+    </div>
+    <a href="/checkout">
+      <button>
+        Checkout
+      </button>
+    </a>
+  </section>
+</div>
+
+<style>
+  .cart__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  @media all and (max-width: 60em) {
+      .cart__wrapper {
+      gap: 0.5rem;
+    }
+  }
+
+  .cart__heading {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .cart__heading {
+      margin-top: 1rem;
+    }
+  }
+
+  .cart__items__grid {
+    width: 100%;
+    display: grid;
+    grid-template-areas: "product quantity total";
+    grid-template-columns: 4fr 1fr 2fr;
+    gap: 1rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .cart__item__headings {
+      display: none;
+    }
+  }
+
+  @media all and (max-width: 60em) {
+    .cart__items__grid {
+      grid-template-areas:
+        "product"
+        "quantity"
+        "total";
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 3.5rem 2rem;
+    }
+  }
+
+  .cart__checkout__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    text-align: right;
+    font-size: 2rem;
+  }
+  
+  @media all and (max-width: 60em) {
+    .cart__checkout__wrapper {
+      margin-top: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .cart__checkout__wrapper > a > button {
+    margin-top: 0.5rem;
+    font-size: 2rem;
+    padding: 0.5rem 1.5rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .cart__checkout__wrapper > a > button {
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("cart", () => ({
+
+    }))
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Cart"
+}
+{% endschema %}

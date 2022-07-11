@@ -20,6 +20,27 @@ document.addEventListener("alpine:init", () => {
       })
     
       this.getData()
+    },
+    async update(updates) {
+      await fetch(window.Shopify.routes.root + "cart/update.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ updates })
+      })
+    
+      this.getData()
+    },
+    async removeItem(id) {
+      await this.update({[id]: 0})
+
+      this.getData()
+    },
+    async updateItemQuantity(id, quantity) {
+      await this.update({[id]: quantity})
+
+      this.getData()
     }
   })
 })
