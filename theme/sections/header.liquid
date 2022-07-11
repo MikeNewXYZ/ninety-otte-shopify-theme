@@ -235,7 +235,7 @@ document.addEventListener("alpine:init", () => {
     addedToCartTooltip() {
       this.$watch('$store.cart.data.item_count', (value, oldValue) => {
         if (!oldValue) return
-        if (value === oldValue) return
+        if (value <= oldValue) return
 
         this.$tooltip(`Added: ${this.$store.cart.data.items[0].title}`)
       })
