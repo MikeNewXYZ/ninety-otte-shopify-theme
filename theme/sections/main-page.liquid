@@ -1,0 +1,30 @@
+<div>
+  <h1 class="container page__heading">
+    {{ page.title }}
+  </h1>
+
+  <hr class="container divider__horizontal" />
+
+  <section class="container page__content">
+    {{ page.content }}
+  </section>
+</div>
+
+<style>
+  .page__heading {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .page__content {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page"
+}
+{% endschema %}

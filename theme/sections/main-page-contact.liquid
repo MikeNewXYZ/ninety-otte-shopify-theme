@@ -1,0 +1,111 @@
+<div>
+  <h1 class="container page__heading">
+    {{ page.title }}
+  </h1>
+
+  <hr class="container divider__horizontal" />
+
+  <section class="container page__content">
+    {{ page.content }}
+  </section>
+
+  {% form 'contact', class: 'container page__contact__wrapper' %}
+    {% if form.errors != blank %}
+      <div class="page__contact__error__message">
+        {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
+
+    <div class="first-name page__form__input__wrapper">
+      <label for="first-name">First name</label>
+      <input type="text" name="contact[first_name]" id="first-name" />
+    </div>
+
+    <div class="last-name page__form__input__wrapper">
+      <label for="last-name">Last name</label>
+      <input type="text" name="contact[last_name]" id="last-name" />
+    </div>
+
+    <div class="email page__form__input__wrapper">
+      <label for="email">Email</label>
+      <input type="email" name="contact[email]" id="email" />
+    </div>
+
+    <div class="order-number page__form__input__wrapper">
+      <label for="order-number">Order number</label>
+      <input type="text" name="contact[order_number]" id="order-number" />
+    </div>
+
+    <div class="message page__form__input__wrapper">
+      <label for="message">Message</label>
+      <textarea name="contact[body]" id="message" rows="10"></textarea>
+    </div>
+
+    <div class="submit">
+      <input type="submit" value="Create" />
+    </div>
+  {% endform %}
+
+</div>
+
+<style>
+  .page__heading {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .page__content {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .page__contact__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 35rem;
+  }
+  
+  .page__contact__error__message {
+    font-size: 2rem;
+    color: var(--color-red);
+    text-shadow: -2px 2px 0 black;
+    margin: 0.5rem 0;
+  }
+
+  .page__form__input__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .page__form__input__wrapper > label {
+    font-size: 1.5rem;
+  }
+
+  .page__form__input__wrapper > input {
+    font-size: 1.5rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .page__form__input__wrapper > textarea {
+    font-size: 1.5rem;
+  }
+
+  .page__contact__wrapper > .submit {
+    margin-top: 1rem;
+  }
+
+  .page__contact__wrapper > .submit > input {
+    width: 100%;
+    font-size: 2rem;
+    padding: 0.5rem 0.25rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact Page"
+}
+{% endschema %}

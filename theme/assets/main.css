@@ -110,6 +110,14 @@ li {
   display: none !important;
 }
 
+/* ANCHOR: Main Index */
+.main__index {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 /* ANCHOR: Main Window */
 .main__window {
   flex: 1;

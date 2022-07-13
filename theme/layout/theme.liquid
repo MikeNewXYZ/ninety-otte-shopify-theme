@@ -18,19 +18,26 @@
   </head>
   <body>
 
-    <main class="window main__window">
-      <div class="title-bar">
-        <div class="title-bar-text">{{ shop.url }} - {{ page_title  }}</div>
-        <div class="title-bar-controls">
-          <button aria-label="Minimize" disabled></button>
-          <button aria-label="Maximize" disabled></button>
-          <button aria-label="Close" disabled></button>
-        </div>
-      </div>
-      <div class="window-body">
+    {% if template.name == 'index' %}
+      <main class="main__index">
         {{ content_for_layout }}
-      </div>
-    </main>
+      </main>
+    {% else %}
+      <main class="window main__window">
+        <div class="title-bar">
+          <div class="title-bar-text">{{ shop.url }} - {{ page_title }}</div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize" disabled></button>
+            <button aria-label="Maximize" disabled></button>
+            <button aria-label="Close" disabled></button>
+          </div>
+        </div>
+        <div class="window-body">
+          {{ content_for_layout }}
+        </div>
+      </main>
+    {% endif %}
+
 
     {% section 'header' %}
 
