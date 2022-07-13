@@ -1,0 +1,157 @@
+<section class="product__gallery__wrapper">
+  <!-- ANCHOR: Gallery Selector -->
+  <div
+    class="product__gallery__selector"
+    x-show="productData.images.length > 4"
+  >
+    <template x-for="(image, index) in selectorImages">
+      <img
+        class="window"
+        draggable="false"
+        :src="image.src"
+        :key="index"
+        @click="handleSelectorImageClick(image.originalIndex)"
+      >
+    </template>
+  </div>
+
+  <!-- ANCHOR: Gallery Main Image -->
+  <div
+    class="window product__gallery__main__image"
+    x-data="{ zoomIn: false, showControls: false }"
+    :style="{ 
+      cursor: zoomIn ? 'zoom-out' : 'zoom-in',
+      gridColumn: productData.images.length < 4 ? '1 / span 5' : null
+    }"
+    @mouseEnter="if (productData.images.length !== 1) showControls = true"
+    @mouseLeave="zoomIn = false; showControls = false"
+  >
+    <div
+      class="product__gallery__main__image__overlay"
+      x-show="showControls"
+      x-cloak
+    >
+      <button @click="handleMainImageControlClick('prev')">
+         < 
+      </button>
+      <button @click="handleMainImageControlClick('next')">
+         > 
+      </button>
+    </div>
+
+    <img
+      draggable="false"
+      data-image-contain
+      :src="productData.images[currentMainImageIndex]"
+      @click="zoomIn =! zoomIn"
+    >
+    <img
+      draggable="false"
+      data-image-cover
+      x-show="zoomIn"
+      :src="productData.images[currentMainImageIndex]"
+      @click="zoomIn =! zoomIn"
+    >
+  </div>
+</section>
+
+<style>
+  .product__gallery__wrapper {
+    grid-area: gal;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  .product__gallery__selector {
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  @media all and (max-width: 50em) {
+    .product__gallery__selector {
+      display: none;
+    }
+  }
+
+  .product__gallery__selector > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+  }
+
+  .product__gallery__main__image {
+    grid-column: 2 / span 4;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    overflow: hidden;
+    position: relative;
+  }
+
+  @media all and (max-width: 50em) {
+    .product__gallery__main__image {
+      grid-column: 1 / span 5;
+    }
+  }
+
+  .product__gallery__main__image > [data-image-cover] {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .product__gallery__main__image > [data-image-contain] {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background-color: var(--color-base-300);
+  }
+
+  .product__gallery__main__image__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .product__gallery__main__image__overlay > button {
+    pointer-events: auto;
+    font-size: 2rem;
+  }
+
+  @media all and (max-width: 50em) {
+    .product__gallery__main__image__overlay {
+      display: flex !important;
+    }
+
+    .product__gallery__main__image__overlay > button {
+      box-shadow: none;
+      background: transparent;
+      outline: none;
+      font-size: 3rem;
+      text-shadow: 0 1px 0 white, 0 -1px 0 white;
+    }
+
+    .product__gallery__main__image__overlay > button:active {
+      box-shadow: none !important;
+    }
+  }
+</style>

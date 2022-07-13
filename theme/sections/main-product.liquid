@@ -1,0 +1,185 @@
+<div
+  class="container product__wrapper"
+  x-data="product"
+>
+  <section class="product__heading__wrapper">
+    <h1>
+      {{ product.title }}
+      - 
+      <span x-text="Shopify.formatMoney(currentVariant.price, '{{ cart.currency.symbol }}')"></span>
+    </h1>
+  </section>
+
+  <!-- ANCHOR: Gallery -->
+  {% render'product-gallery',
+    product: product
+  %}
+
+  <!-- ANCHOR: Product Options -->
+  {% render 'product-options' %}
+
+  <!-- ANCHOR: Description -->
+  <section class="product__description__wrapper">
+    <h2>Description</h2>
+
+    <hr class="divider__horizontal" />
+
+    <p>{{ product.description }}</p>
+  </section>
+</div>
+
+<style>
+  .product__wrapper {
+    display: grid;
+    grid-template-areas: 
+      "hed hed hed hed hed hed"
+      "gal gal gal gal opt opt"
+      "des des des des des des";
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: min-content 30rem  min-content;
+    gap: 2rem;
+  }
+
+  @media all and (max-width: 65em) {
+    .product__wrapper {
+      grid-template-areas: 
+        "hed hed hed hed hed hed"
+        "gal gal gal gal gal gal"
+        "opt opt opt opt opt opt"
+        "des des des des des des";
+      grid-template-rows: min-content 30rem min-content min-content;
+      gap: 1rem;
+    }
+  }
+
+  @media all and (max-width: 40em) {
+    .product__wrapper {
+      grid-template-rows: min-content 20rem min-content min-content;
+    }
+  }
+
+  .product__heading__wrapper {
+    grid-area: hed;
+    margin: 1.5rem 0 2.25rem 0;
+    text-shadow:
+      2.5px 2.5px 0 var(--color-red),
+      5px 5px 0 var(--color-yellow),
+      7.5px 7.5px 0 var(--color-blue);
+  }
+
+  @media all and (max-width: 65em) {
+    .product__heading__wrapper > h1 {
+      font-size: 4rem;
+      text-shadow:
+        2px 2px 0 var(--color-red),
+        4px 4px 0 var(--color-yellow),
+        6px 6px 0 var(--color-blue);
+    }
+
+    .product__heading__wrapper {
+      margin: 1.5rem 0 0.75rem 0;
+    }
+  }
+
+  @media all and (max-width: 40em) {
+    .product__heading__wrapper > h1 {
+      font-size: 3rem;
+      text-shadow:
+        1.5px 1.5px 0 var(--color-red),
+        2.5px 2.5px 0 var(--color-yellow),
+        3.5px 3.5px 0 var(--color-blue);
+    }
+
+    .product__heading__wrapper {
+      margin: 0.75rem 0 0.75rem 0;
+    }
+  }
+
+  .product__description__wrapper {
+    grid-area: des;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+</style>
+
+<script>
+document.addEventListener("alpine:init", () => {
+  Alpine.data("product", () => ({
+    productData: JSON.parse(`{{ product | json }}`),
+    selectorImages: [],
+    currentMainImageIndex: 0,
+    currentVariant: JSON.parse(`{{ product.variants[0] | json }}`),
+    currentQuantity: 1,
+    init() {
+      this.setSelectorImages()
+    },
+    setSelectorImages() {
+      let images = []
+
+      this.productData.images.forEach((img, index) => {
+        if (images.length >= 3) return
+        if (index === this.currentMainImageIndex) return
+
+        images.push({src: img, originalIndex: index})
+      })
+
+      this.selectorImages = images
+    },
+    handleSelectorImageClick(originalIndex) {
+      this.currentMainImageIndex = originalIndex
+      this.setSelectorImages()
+    },
+    handleMainImageControlClick(direction) {
+      if (direction === "next") {
+        if (this.currentMainImageIndex === this.productData.images.length - 1) {
+          this.currentMainImageIndex = 0
+        } else {
+          this.currentMainImageIndex = this.currentMainImageIndex + 1
+        }
+      }
+
+      if (direction === "prev") {
+        if (this.currentMainImageIndex === 0) {
+          this.currentMainImageIndex = this.productData.images.length - 1
+        } else {
+          this.currentMainImageIndex = this.currentMainImageIndex - 1
+        }
+      }
+
+      this.setSelectorImages()
+    },
+    handleOptionsChange(e) {
+      e.preventDefault()
+
+      const optionsData = [...new FormData(e.currentTarget).entries()].map((option) => option[1])
+      const options = {
+        option1: optionsData[0] || null,
+        option2: optionsData[1] || null,
+        option3: optionsData[2] || null
+      }
+
+      this.productData.variants.forEach((variant) => {
+        if (variant.option1 !== options.option1) return
+        if (variant.option2 !== options.option2) return
+        if (variant.option3 !== options.option3) return
+
+        console.log(variant)
+
+        this.currentVariant = variant
+      })
+    },
+    handleAddToCart() {
+      this.$store.cart.add([{
+        id: this.currentVariant.id,
+        quantity: this.currentQuantity
+      }])
+    }
+  }))
+})
+</script>
+
+{% schema %}
+{
+  "name": "Product"
+}
+{% endschema %}

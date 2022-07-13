@@ -156,3 +156,9 @@ li {
     padding: 0;
   }
 }
+
+/* ANCHOR: Paragraph */
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
