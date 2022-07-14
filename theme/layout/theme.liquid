@@ -21,6 +21,8 @@
     {% if template.name == 'index' %}
       <main class="main__index">
         {{ content_for_layout }}
+
+        {% section 'footer' %}
       </main>
     {% else %}
       <main class="window main__window">
@@ -34,6 +36,8 @@
         </div>
         <div class="window-body">
           {{ content_for_layout }}
+
+          {% section 'footer' %}
         </div>
       </main>
     {% endif %}

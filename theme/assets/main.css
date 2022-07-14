@@ -116,6 +116,8 @@ li {
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ANCHOR: Main Window */
@@ -133,6 +135,8 @@ li {
   flex: 1;
   margin: 0;
   padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .main__window > .title-bar > .title-bar-controls > button {

@@ -1,0 +1,116 @@
+<div class="footer__inner__wrapper">
+  <!-- ANCHOR: Divider -->
+  <hr
+    class="divider__horizontal"
+    style="margin: 0;"
+  />
+
+  <!-- ANCHOR: Links -->
+  <section class="container" style="width: 100%">
+    <ul class="tree-view footer__links__wrapper">
+      <!-- ANCHOR: Parent Links -->
+      {% for link in linklists.footer.links %}
+        <li>
+          <span class="footer__links__heading">
+            {{ link.title }}
+          </span>
+          
+          <!-- ANCHOR: Child Links -->
+          {% if link.links != blank %}
+            <ul>
+              {% for child_link in link.links %}
+                <li>
+                  <a
+                    class="footer__child__links"
+                    href="{{ child_link.url }}"
+                  >
+                    {{ child_link.title | truncate: 30, '...' }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+
+  <!-- ANCHOR: Divider -->
+  <hr
+    class="divider__horizontal"
+  />
+
+  <!-- ANCHOR: Shop Wrapper -->
+  <section class="container">
+    <span class="footer__shop__text">
+      {{ shop.name }}
+    </span>
+  </section>
+
+  <!-- ANCHOR: Divider -->
+  <hr
+    class="divider__horizontal"
+    style="margin-bottom: 1rem;"
+  />
+</div>
+
+
+<style>
+  .footer__wrapper {
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  .footer__inner__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--color-base-100);
+  }
+
+  .footer__links__wrapper {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 4rem;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    margin: 1rem 0 1.25rem 0 !important;
+  }
+
+  @media all and (max-width: 40em) {
+    .footer__links__wrapper {
+      gap: 2rem;
+    }
+  }
+
+  .footer__links__heading {
+    font-size: 1.75rem;
+  }
+
+  .footer__child__links {
+    font-size: 1.25rem;
+    color: var(--color-blue) !important;
+    text-decoration: underline !important;
+  }
+
+  .footer__links__wrapper ul > li:last-child:after {
+    background-color: var(--color-base-100) !important;
+  }
+
+  .footer__shop__text {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0.5rem 0 0.25rem 0;
+    width: 100%;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "footer",
+  "tag": "footer",
+  "class": "footer__wrapper"
+}
+{% endschema %}
