@@ -2,30 +2,40 @@
   /* ANCHOR: Root Style Variables */
 
   /* ANCHOR: Color */
-  --color-base-100: #C0C0C0;
-  --color-base-200: #DFDFDF;
-  --color-base-300: #FFFFFF;
+  --color-base-100: #c0c0c0;
+  --color-base-200: #dfdfdf;
+  --color-base-300: #ffffff;
   --color-base-content: #222222;
-  --color-red: #DF6060;
-  --color-yellow: #DFDF60;
-  --color-green: #60A060;
-  --color-blue: #6060DF;
+  --color-red: #df6060;
+  --color-yellow: #dfdf60;
+  --color-green: #60a060;
+  --color-blue: #6060df;
   --color-turquoise: #008080;
 }
 
 /* ANCHOR: Breakpoints */
-:root { --breakpoint: 'unset';}
+:root {
+  --breakpoint: "unset";
+}
 @media screen and (min-width: 567px) {
-  :root { --breakpoint: 'sm'; }
+  :root {
+    --breakpoint: "sm";
+  }
 }
 @media screen and (min-width: 900px) {
-  :root { --breakpoint: 'md'; }
+  :root {
+    --breakpoint: "md";
+  }
 }
 @media screen and (min-width: 1200px) {
-  :root { --breakpoint: 'lg'; }
+  :root {
+    --breakpoint: "lg";
+  }
 }
 @media screen and (min-width: 1600px) {
-  :root { --breakpoint: '2xl'; }
+  :root {
+    --breakpoint: "2xl";
+  }
 }
 
 /* ANCHOR: Everything */
@@ -34,7 +44,8 @@
 }
 
 /* ANCHOR: Body */
-html, body {
+html,
+body {
   background-color: var(--color-turquoise);
   color: var(--color-base-content);
   width: 100%;
@@ -56,15 +67,20 @@ body::after {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(220,220,220, 0.05),
-    rgba(220,220,220, 0.05) 2px,
+    rgba(220, 220, 220, 0.05),
+    rgba(220, 220, 220, 0.05) 2px,
     transparent 1px,
     transparent 4px
   );
 }
 
 /* ANCHOR: Heading */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -76,7 +92,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ANCHOR: Button, Reset, Submit */
-button, input[type=reset], input[type=submit] {
+button,
+input[type="reset"],
+input[type="submit"] {
   cursor: pointer;
   line-height: normal;
 }
@@ -173,4 +191,13 @@ li {
 p {
   margin-block-start: 0;
   margin-block-end: 0;
+}
+
+/* ANCHOR: Scrollbar */
+/* Disables double button that appears when parent element is display flex */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement,
+::-webkit-scrollbar-button:horizontal:start:increment,
+::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: none;
 }
