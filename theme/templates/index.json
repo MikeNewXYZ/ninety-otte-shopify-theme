@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "image_and_text": {
+      "type": "image-and-text"
+    },
+    "image_and_text_reverse": {
+      "type": "image-and-text",
+      "settings": {
+        "direction": "text_then_image"
+      }
+    }
+  },
+  "order": [
+    "image_and_text",
+    "image_and_text_reverse"
+  ]
+}
