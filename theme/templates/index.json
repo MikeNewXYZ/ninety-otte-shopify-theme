@@ -1,5 +1,14 @@
 {
   "sections": {
+    "rich_text_heading": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        }
+      },
+      "block_order": ["heading"]
+    }, 
     "image_and_text": {
       "type": "image-and-text"
     },
@@ -8,10 +17,27 @@
       "settings": {
         "direction": "text_then_image"
       }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        },
+        "divider": {
+          "type": "divider"
+        },
+        "rich_text": {
+          "type": "rich_text"
+        }
+      },
+      "block_order": ["heading", "divider", "rich_text"]
     }
   },
   "order": [
+    "rich_text_heading",
     "image_and_text",
-    "image_and_text_reverse"
+    "image_and_text_reverse",
+    "rich_text"
   ]
 }

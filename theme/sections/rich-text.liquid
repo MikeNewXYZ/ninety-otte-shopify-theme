@@ -1,0 +1,132 @@
+<window-box heading="{{ section.settings.window_box_title }}">
+  <div class="rich-text__wrapper">
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+      
+        {% when 'heading' %}
+          {% assign heading = block.settings.heading_text %}
+          {% assign text_align = block.settings.heading_text_align %}
+          <h1
+            class="rich-text__heading"
+            style="{{ text_align }}"
+          >
+            {{ heading }}
+          </h1>
+
+        {% when 'divider' %}
+          <hr class="divider__horizontal" />
+
+        {% when 'rich_text' %}
+          {% assign rich_text = block.settings.rich_text %}
+          <section
+            class="rich-text__text-wrapper"
+          >
+            {{ rich_text }}
+          </section>
+        
+      {% endcase %}
+    {% endfor %}
+
+  </div>
+</window-box>
+
+
+<style>
+  .rich-text__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rich-text__heading {
+    margin: 1rem 0;
+  }
+
+  .rich-text__text-wrapper {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "tag": "section",
+  "class": "container",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_box_title",
+      "label": "Window Box Title",
+      "default": "Rich Text"
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "name": "Heading",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading text",
+          "default": "Heyo world!!!"
+        },
+        {
+          "type": "radio",
+          "id": "heading_text_align",
+          "label": "Text Align",
+          "default": "text-align: center;",
+          "options": [
+            {
+              "value": "text-align: left;",
+              "label": "Left"
+            },
+            {
+              "value": "text-align: center;",
+              "label": "Center"
+            },
+            {
+              "value": "text-align: right;",
+              "label": "Right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Divider",
+      "type": "divider"
+    },
+    {
+      "name": "Rich Text",
+      "type": "rich_text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "rich_text",
+          "label": "Rich Text",
+          "default": "<p>Dolor esse quis pariatur pariatur qui tempor tempor in non velit elit id dolore. Incididunt quis pariatur commodo qui ea mollit anim occaecat elit cillum consequat. Proident dolore consectetur esse eiusmod consectetur nulla officia amet tempor fugiat nisi incididunt. Voluptate eiusmod laborum proident consequat exercitation ut officia tempor.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "rich_text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
