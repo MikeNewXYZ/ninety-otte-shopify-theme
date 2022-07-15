@@ -8,7 +8,22 @@
         }
       },
       "block_order": ["heading"]
-    }, 
+    },
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "heading": {
+          "type": "heading"
+        },
+        "description": {
+          "type": "description"
+        },
+        "button": {
+          "type": "button"
+        }
+      },
+      "block_order": ["heading", "description", "button"]
+    },
     "image_and_text": {
       "type": "image-and-text"
     },
@@ -36,6 +51,7 @@
   },
   "order": [
     "rich_text_heading",
+    "hero",
     "image_and_text",
     "image_and_text_reverse",
     "rich_text"

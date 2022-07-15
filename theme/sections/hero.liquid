@@ -1,0 +1,186 @@
+<window-box heading="{{ section.settings.window_box_title }}">
+  <div
+    class="hero__wrapper"
+    style="background-image: url({{ section.settings.background_image | img_url: 'master' }});"
+  >
+    <div class="hero__content-wrapper">
+      {% for block in section.blocks %}
+        {% case block.type %}
+
+          {% when 'heading' %}
+            {% assign heading = block.settings.heading %}
+            <h1 class="hero__heading">
+              {{ heading }}
+            </h1>
+
+          {% when 'description' %}
+            {% assign description = block.settings.description %}
+            <div class="hero__description">
+              {{ description }}
+            </div>
+        
+          {% when 'button' %}
+            {% assign button_url = block.settings.button_url %}
+            {% assign button_text = block.settings.button_text %}
+            <a
+              class="hero__button"
+              href="{{ button_url }}"
+            >
+              <button class="hero__button">
+                {{ button_text }}
+              </button>
+            </a>
+            
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</window-box>
+
+<style>
+  .hero__wrapper {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .hero__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem 15em;
+    color: white;
+    text-align: center;
+  }
+
+  @media all and (max-width: 60em) {
+    .hero__content-wrapper {
+      padding: 1rem 5em;
+    }
+  }
+
+  @media all and (max-width: 40em) {
+    .hero__content-wrapper {
+      padding: 1rem 1em;
+    }
+  }
+
+  .hero__heading {
+    font-size: 5rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .hero__heading {
+      font-size: 3rem;
+    }
+  }
+
+  .hero__description {
+    font-size: 2rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .hero__description {
+      font-size: 1rem;
+    }
+  }
+
+  .hero__button {
+    font-size: 3rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  @media all and (max-width: 60em) {
+    .hero__button {
+      font-size: 2rem;
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 20rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "container",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_box_title",
+      "label": "Window Box Title",
+      "default": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Heading",
+      "type": "heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Nostrud et nisi et sit!"
+        }
+      ]
+    },
+    {
+      "name": "Description",
+      "type": "description",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Consequat laborum nulla eiusmod irure. Aliquip officia officia dolor nisi eiusmod est Lorem velit anim culpa aute deserunt ad aute. Exercitation velit ad qui aute aliquip cupidatat occaecat eu eiusmod do dolor consectetur laborum. Sint do pariatur enim consectetur deserunt magna consequat duis dolor aute voluptate ea. Sit eiusmod laborum officia in excepteur ea ad Lorem Lorem sunt enim excepteur ea sit. Dolore Lorem duis id reprehenderit do anim nulla culpa ut.</p>"
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "type": "button",
+      "settings": [
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "URL"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now!!!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name":"Hero",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
