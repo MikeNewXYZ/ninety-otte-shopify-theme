@@ -6,28 +6,30 @@
     <hr class="divider__horizontal" />
   </div>
 
-  <form class="product__option__selectors"  @change="handleOptionsChange">
-    {% for option in product.options_with_values %}
-      <div>
-        <label for="{{- option.name -}}">{{ option.name }}</label>
-        <select
-          name="option{{- option.position -}}"
-          id="{{- option.name -}}"
-        >
-          {% for value in option.values %}
-            <option
-              value="{{- value -}}"
-              {% if option.selected_value == option.value %}
-                selected
-              {% endif %}            
-            >
-              {{ value }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-    {% endfor %}
-  </form>
+  {% unless product.has_only_default_variant %}
+    <form class="product__option__selectors"  @change="handleOptionsChange">
+      {% for option in product.options_with_values %}
+        <div>
+          <label for="{{- option.name -}}">{{ option.name }}</label>
+          <select
+            name="option{{- option.position -}}"
+            id="{{- option.name -}}"
+          >
+            {% for value in option.values %}
+              <option
+                value="{{- value -}}"
+                {% if option.selected_value == option.value %}
+                  selected
+                {% endif %}            
+              >
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endfor %}
+    </form>
+  {% endunless %}
 
   <div>
     <div class="product__option__quantity">
